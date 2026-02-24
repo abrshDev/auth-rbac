@@ -1,0 +1,40 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+auth-rbac-fiber
+
+# Test binary
+*.test
+
+# Output of go build
+/bin/
+/dist/
+
+# Dependency directories (if vendored)
+vendor/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage.out
+
+# Docker
+*.pid
+
+# Temporary files
+tmp/
