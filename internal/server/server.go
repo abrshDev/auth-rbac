@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/abrshDev/auth-rbac/internal/user"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -21,6 +23,7 @@ func LoadEnv() {
 }
 
 func ConnectDb() {
+	var err error
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_USER"),
@@ -28,9 +31,13 @@ func ConnectDb() {
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_PORT"),
 	)
-	DB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
+	}
+	err = DB.AutoMigrate(&user.User{})
+	if err != nil {
+		log.Fatal("Failed to migrate database:", err)
 	}
 	fmt.Println("Database connected successfully", DB)
 }
