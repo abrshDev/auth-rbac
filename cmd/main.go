@@ -15,9 +15,9 @@ func main() {
 	repo := user.NewRepository(server.DB)
 
 	u := &user.User{
-		Username:     "test",
-		Email:        "test@example.com",
-		PasswordHash: "fakehash",
+		Username:     "test1",
+		Email:        "test@ex1ample.com",
+		PasswordHash: "fakehash1",
 		Role:         "user",
 	}
 
