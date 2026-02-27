@@ -1,6 +1,10 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"github.com/abrshDev/auth-rbac/pkg/utils"
+
+	"gorm.io/gorm"
+)
 
 type Repository struct {
 	db *gorm.DB
@@ -9,8 +13,23 @@ type Repository struct {
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{db: db}
 }
-func (r *Repository) CreateUser(user *User) error {
-	return r.db.Create(user).Error
+func (r *Repository) CreateUserWithPassword(username, email, password, role string) (*User, error) {
+	hashedPassword, err := utils.HashPassword(password)
+	if err != nil {
+		return nil, err // let handler handle response
+	}
+	if role == "" {
+		role = "user"
+	}
+	user := &User{
+		Username:     username,
+		Email:        email,
+		PasswordHash: hashedPassword,
+		Role:         role,
+	}
+	err = r.db.Create(user).Error
+	return user, err
+
 }
 func (r *Repository) GetUserByEmail(email string) (*User, error) {
 	var user User

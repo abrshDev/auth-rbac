@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/abrshDev/auth-rbac/internal/auth"
 	"github.com/abrshDev/auth-rbac/internal/user"
 
 	"github.com/gofiber/fiber/v2"
@@ -45,6 +46,17 @@ func registeroutes(app *fiber.App) {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Auth RBAC Fiber API is running!")
 	})
+	userRepo := user.NewRepository(DB)
+
+	authHandler := auth.NewAuthHandler(userRepo)
+
+	// Group routes
+	api := app.Group("/api")
+	authGroup := api.Group("/auth")
+
+	// Register endpoint
+	authGroup.Post("/register", authHandler.Register)
+
 }
 
 func NewApp() *fiber.App {
