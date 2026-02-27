@@ -16,7 +16,7 @@ func main() {
 
 	u := &user.User{
 		Username:     "test1",
-		Email:        "test@ex1ample.com",
+		Email:        "test@essx1ample.com",
 		PasswordHash: "fakehash1",
 		Role:         "user",
 	}
