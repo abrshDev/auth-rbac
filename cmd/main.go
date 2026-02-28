@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/abrshDev/auth-rbac/internal/server"
+	"github.com/abrshDev/auth-rbac/pkg/utils"
 )
 
 func main() {
@@ -13,6 +14,8 @@ func main() {
 	app := server.NewApp()
 
 	fmt.Println("User created successfully")
+	s, _ := utils.GenerateToken(1, "user")
+	fmt.Println("s", s)
 	log.Fatal(app.Listen(":3000"))
 
 }
