@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/abrshDev/auth-rbac/internal/auth"
+	"github.com/abrshDev/auth-rbac/internal/middleware"
 	"github.com/abrshDev/auth-rbac/internal/user"
 
 	"github.com/gofiber/fiber/v2"
@@ -57,6 +58,16 @@ func registeroutes(app *fiber.App) {
 
 	// Register endpoint
 	authGroup.Post("/register", authHandler.Register)
+	authGroup.Post("/login", authHandler.Login)
+	api.Get("/profile",
+		middleware.Protected(),
+		func(c *fiber.Ctx) error {
+			return c.JSON(fiber.Map{
+				"user_id": c.Locals("user_id"),
+				"role":    c.Locals("role"),
+			})
+		},
+	)
 
 }
 

@@ -63,7 +63,14 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "invalid credentials"})
 	}
 
+	// Generate JWT
+	token, err := utils.GenerateToken(user.ID, user.Role)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).
+			JSON(fiber.Map{"error": "could not generate token"})
+	}
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "login successful",
+		"token": token,
 	})
 }
