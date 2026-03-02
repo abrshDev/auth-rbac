@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/abrshDev/auth-rbac/internal/server"
 )
@@ -10,10 +11,15 @@ import (
 func main() {
 	server.LoadEnv()
 	server.ConnectDb()
+
 	app := server.NewApp()
 
-	fmt.Println("User created successfully")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000" // local fallback
+	}
 
-	log.Fatal(app.Listen(":3000"))
+	fmt.Println("Server running on port:", port)
 
+	log.Fatal(app.Listen(":" + port))
 }
