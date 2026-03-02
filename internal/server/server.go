@@ -59,6 +59,15 @@ func registeroutes(app *fiber.App) {
 	// Register endpoint
 	authGroup.Post("/register", authHandler.Register)
 	authGroup.Post("/login", authHandler.Login)
+	api.Get("/admin/dashboard",
+		middleware.Protected(),
+		middleware.Authorize("admin"),
+		func(c *fiber.Ctx) error {
+			return c.JSON(fiber.Map{
+				"message": "Welcome Admin",
+			})
+		},
+	)
 	api.Get("/profile",
 		middleware.Protected(),
 		func(c *fiber.Ctx) error {
