@@ -1,25 +1,27 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/abrshDev/auth-rbac/config"
 	"github.com/abrshDev/auth-rbac/internal/server"
 )
 
 func main() {
-	server.LoadEnv()
-	server.ConnectDb()
+	config.LoadEnv()
 
-	app := server.NewApp()
+	db, err := config.ConnectDb()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	app := server.NewApp(db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000" // local fallback
+		port = "3000"
 	}
-
-	fmt.Println("Server running on port:", port)
 
 	log.Fatal(app.Listen(":" + port))
 }
