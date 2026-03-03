@@ -1,0 +1,96 @@
+# Auth RBAC - Go Backend
+
+Production-ready authentication and role-based access control (RBAC) API built with Go, PostgreSQL, JWT, and Docker.
+
+---
+
+## Project Structure
+
+```
+.
+├── cmd
+│   └── main.go
+├── config
+├── docker-compose.yml
+├── go.mod
+├── go.sum
+├── internal
+│   ├── auth
+│   │   └── handler.go
+│   ├── middleware
+│   │   ├── auth_middleware.go
+│   │   └── role_middleware.go
+│   └── server
+│       └── server.go
+```
+
+---
+
+## Features
+
+* User Registration
+* User Login
+* JWT Authentication
+* Role-Based Authorization
+* PostgreSQL Integration
+* Docker for local development
+
+---
+
+## Live API
+
+Base URL:
+
+```
+https://auth-rbac.onrender.com
+```
+
+### Register User
+
+```
+POST https://auth-rbac.onrender.com/api/auth/register
+```
+
+Example:
+
+```
+curl -X POST https://auth-rbac.onrender.com/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "123456",
+    "role": "user"
+  }'
+```
+
+### Login
+
+```
+POST https://auth-rbac.onrender.com/api/auth/login
+```
+
+---
+
+## Environment Variables
+
+```
+DATABASE_URL
+JWT_SECRET
+```
+
+---
+
+## Run Locally
+
+With Docker:
+
+```
+docker compose up -d
+```
+
+Run app:
+
+```
+go run ./cmd
+```
