@@ -9,13 +9,11 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-
 func registeroutes(app *fiber.App, db *gorm.DB) {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Auth RBAC Fiber API is running!")
 	})
-	userRepo := user.NewRepository(DB)
+	userRepo := user.NewRepository(db)
 
 	authHandler := auth.NewAuthHandler(userRepo)
 
