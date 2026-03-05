@@ -9,8 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-
 func ConnectDb() (*gorm.DB, error) {
 	dbURL := os.Getenv("DATABASE_URL")
 
