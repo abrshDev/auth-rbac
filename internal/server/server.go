@@ -24,6 +24,8 @@ func registeroutes(app *fiber.App, db *gorm.DB) {
 	// Register endpoint
 	authGroup.Post("/register", authHandler.Register)
 	authGroup.Post("/login", authHandler.Login)
+	authGroup.Post("/refresh", authHandler.Refresh)
+
 	api.Get("/admin/dashboard",
 		middleware.Protected(),
 		middleware.Authorize("admin"),
